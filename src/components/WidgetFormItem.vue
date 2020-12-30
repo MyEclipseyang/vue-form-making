@@ -222,7 +222,21 @@ export default {
   },
   data () {
     return {
-      selectWidget: this.select
+      selectWidget: this.select,
+      specialItem: [
+        {
+          name: 'radio'
+        },
+        {
+          name: 'checkbox'
+        },
+        {
+          name: 'select'
+        },
+        {
+          name: 'singleSelectExamScore'
+        },
+      ]
     }
   },
   mounted () {
@@ -265,9 +279,7 @@ export default {
         model: this.data.list[index].type + '_' + key,
         rules: this.data.list[index].rules || []
       }
-
-      if (this.data.list[index].type === 'radio' || this.data.list[index].type === 'checkbox' || this.data.list[index].type === 'select') {
-
+      if(this.specialItem.some(item => item.name === this.data.list[index].type)){
         cloneData = {
           ...cloneData,
           options: {

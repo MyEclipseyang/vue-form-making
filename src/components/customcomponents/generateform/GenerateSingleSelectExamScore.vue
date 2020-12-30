@@ -7,7 +7,7 @@
     <template v-if="!widget.options.isRelateWithStudent">
       <el-divider></el-divider>
       <div><span>可选分数</span></div>
-      <span style="margin-left: 5px;" v-for="(item, index) in widget.options.scoreList" :key="index">
+      <span style="margin-left: 5px;" v-for="(item, index) in widget.options.options" :key="index">
             <el-button :type="widget.options.finalScore === item.value ? 'success' : ''"
                        @click="setFinalScore(item.value)" circle>{{ item.value }}
             </el-button>

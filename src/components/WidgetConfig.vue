@@ -351,11 +351,11 @@
         </el-form-item>
        <template v-if="!data.options.isRelateWithStudent">
          <el-form-item label="分值">
-           <draggable tag="ul" :list="data.options.scoreList"
+           <draggable tag="ul" :list="data.options.options"
                       v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
                       handle=".drag-item"
            >
-             <li v-for="(item, index) in data.options.scoreList" :key="index" >
+             <li v-for="(item, index) in data.options.options" :key="index" >
 
                <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
                <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
@@ -417,18 +417,16 @@ export default {
   },
   computed: {
     show () {
-      if (this.data && Object.keys(this.data).length > 0) {
-        return true
-      }
-      return false
+      return this.data && Object.keys(this.data).length > 0;
+
     }
   },
   methods: {
     handleOptionsRemove (index) {
       if (this.data.type === 'grid') {
         this.data.columns.splice(index, 1)
-      } else if(this.data.type === 'singleSelectExamScore'){
-        this.data.options.scoreList.splice(index, 1)
+      // } else if(this.data.type === 'singleSelectExamScore'){
+      //   this.data.options.options.splice(index, 1)
       }else {
         this.data.options.options.splice(index, 1)
       }
@@ -446,7 +444,7 @@ export default {
       }
     },
     handleAddScoreOption(){
-      this.data.options.scoreList.push({value: 0})
+      this.data.options.options.push({value: 0})
     },
     handleAddColumn () {
       this.data.columns.push({

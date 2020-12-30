@@ -6,7 +6,7 @@
     <template v-if="!element.options.isRelateWithStudent">
       <el-divider></el-divider>
       <div><span>可选分数</span></div>
-      <span style="margin-left: 5px;" v-for="(item, index) in element.options.scoreList" :key="index">
+      <span style="margin-left: 5px;" v-for="(item, index) in element.options.options" :key="index">
               <el-button circle>{{ item.value }}</el-button>
              </span>
     </template>

@@ -75,7 +75,22 @@ export default {
   props: ['data', 'select'],
   data () {
     return {
-      selectWidget: this.select
+      selectWidget: this.select,
+      // 拖拽过来需要特殊处理的组件
+      specialItem: [
+        {
+          name: 'radio'
+        },
+        {
+          name: 'checkbox'
+        },
+        {
+          name: 'select'
+        },
+        {
+          name: 'singleSelectExamScore'
+        },
+      ]
     }
   },
   mounted () {
@@ -135,8 +150,7 @@ export default {
         model: this.data.list[newIndex].type + '_' + key,
         rules: []
       })
-
-      if (this.data.list[newIndex].type === 'radio' || this.data.list[newIndex].type === 'checkbox' || this.data.list[newIndex].type === 'select') {
+      if(this.specialItem.some(item => item.name === this.data.list[newIndex].type)){
         this.$set(this.data.list, newIndex, {
           ...this.data.list[newIndex],
           options: {
@@ -147,7 +161,6 @@ export default {
           }
         })
       }
-
       if (this.data.list[newIndex].type === 'grid') {
         this.$set(this.data.list, newIndex, {
           ...this.data.list[newIndex],

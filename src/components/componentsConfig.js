@@ -332,7 +332,7 @@ export const customComponents = [
       // 题目
       content: '题目内容',
       // 分值
-      scoreList: [
+      options: [
         {
           value: 0
         },
