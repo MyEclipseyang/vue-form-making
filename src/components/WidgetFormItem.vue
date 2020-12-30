@@ -172,7 +172,7 @@
           </el-cascader>
         </template>
 
-        <template v-if="element.type == 'editor'">
+        <template v-if="element.type === 'editor'">
           <vue-editor
             v-model="element.options.defaultValue"
             :style="{width: element.options.width}"
@@ -180,20 +180,31 @@
           </vue-editor>
         </template>
 
-        <template v-if="element.type=='blank'">
+        <template v-if="element.type==='blank'">
           <div style="height: 50px;color: #999;background: #eee;line-height:50px;text-align:center;">{{$t('fm.components.fields.blank')}}</div>
         </template>
 
-        <template v-if="element.type == 'text'">
+        <template v-if="element.type === 'text'">
           <span>{{element.options.defaultValue}}</span>
         </template>
 
-        <div class="widget-view-action" v-if="selectWidget.key == element.key">
+        <template v-if="element.type === 'custom'">
+          <el-input
+              v-model="element.options.defaultValue"
+              :style="{width: element.options.width}"
+          ></el-input>
+        </template>
+
+        <template v-if="element.type === 'singleSelectExamScore'">
+          <WidgetSingleSelectExamScore ref="widgetSingleSelectExamScore" :element="element"/>
+        </template>
+
+        <div class="widget-view-action" v-if="selectWidget.key === element.key">
           <i class="iconfont icon-icon_clone" @click.stop="handleWidgetClone(index)"></i>
           <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)"></i>
         </div>
 
-        <div class="widget-view-drag" v-if="selectWidget.key == element.key">
+        <div class="widget-view-drag" v-if="selectWidget.key === element.key">
           <i class="iconfont icon-drag drag-widget"></i>
         </div>
         
@@ -202,10 +213,12 @@
 
 <script>
 import FmUpload from './Upload'
+import WidgetSingleSelectExamScore from './customcomponents/widgetform/WidgetSingleSelectExamScore'
 export default {
   props: ['element', 'select', 'index', 'data'],
   components: {
     FmUpload,
+    WidgetSingleSelectExamScore
   },
   data () {
     return {
@@ -216,6 +229,12 @@ export default {
     
   },
   methods: {
+    generateScoreData(){
+      if(this.element.type === 'singleSelectExamScore'){
+        return this.$refs.widgetSingleSelectExamScore.getScoreData()
+      }
+      return null;
+    },
     handleSelectWidget (index) {
       this.selectWidget = this.data.list[index]
     },

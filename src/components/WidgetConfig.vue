@@ -298,9 +298,8 @@
           </el-select>
         </el-form-item>
       </template>
-      
 
-      <template v-if="data.type != 'grid'">
+      <template v-if="ignoreCommonConfigList.indexOf(data.type) < 0">
         <el-form-item :label="$t('fm.config.widget.attribute')">
           <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">{{$t('fm.config.widget.readonly')}}</el-checkbox>
           <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">{{$t('fm.config.widget.disabled')}}	</el-checkbox>
@@ -331,6 +330,63 @@
           </div>
         </el-form-item>
       </template>
+      <template v-if="data.type ==='custom'">
+        <el-form-item label="测试">
+          <span>{{ data.options.test }}</span>
+        </el-form-item>
+      </template>
+
+      <template v-if="data.type ==='text'">
+        <el-form-item :label="$t('fm.config.widget.defaultValue')">
+          <el-input v-model="data.options.defaultValue"></el-input>
+        </el-form-item>
+      </template>
+
+      <template v-if="data.type ==='singleSelectExamScore'">
+        <el-form-item label="题目内容">
+          <el-input v-model="data.options.content"></el-input>
+        </el-form-item>
+        <el-form-item label="总分">
+          <el-input-number v-model="data.options.totalScore" :min="0" :max="200" :step="1"></el-input-number>
+        </el-form-item>
+       <template v-if="!data.options.isRelateWithStudent">
+         <el-form-item label="分值">
+           <draggable tag="ul" :list="data.options.scoreList"
+                      v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
+                      handle=".drag-item"
+           >
+             <li v-for="(item, index) in data.options.scoreList" :key="index" >
+
+               <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
+               <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
+               <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
+               <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
+             </li>
+           </draggable>
+         </el-form-item>
+         <div style="margin-left: 22px;">
+           <el-button type="text" @click="handleAddScoreOption">{{$t('fm.actions.addOption')}}</el-button>
+         </div>
+       </template>
+        <el-form-item label="是否与学生关联">
+          <el-switch
+              v-model="data.options.isRelateWithStudent"
+              active-color="#13ce66">
+          </el-switch>
+        </el-form-item>
+        <div v-show="data.options.isRelateWithStudent">
+          <el-form-item label="是否允许分数为负数">
+            <el-switch
+                v-model="data.options.isNegativeModel"
+                active-color="#13ce66">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="违纪学生每人次扣分数">
+            <el-input-number v-model="data.options.violateScoreReduction" :min="0" :max="200" :step="1"></el-input-number>
+          </el-form-item>
+        </div>
+
+      </template>
     </el-form>
   </div>
 </template>
@@ -351,7 +407,12 @@ export default {
         pattern: null,
         range: null,
         length: null
-      }
+      },
+      ignoreCommonConfigList:[
+          'text',
+          'grid',
+          'singleSelectExamScore'
+      ]
     }
   },
   computed: {
@@ -366,10 +427,11 @@ export default {
     handleOptionsRemove (index) {
       if (this.data.type === 'grid') {
         this.data.columns.splice(index, 1)
-      } else {
+      } else if(this.data.type === 'singleSelectExamScore'){
+        this.data.options.scoreList.splice(index, 1)
+      }else {
         this.data.options.options.splice(index, 1)
       }
-      
     },
     handleAddOption () {
       if (this.data.options.showLabel) {
@@ -382,7 +444,9 @@ export default {
           value: this.$t('fm.config.widget.newOption')
         })
       }
-      
+    },
+    handleAddScoreOption(){
+      this.data.options.scoreList.push({value: 0})
     },
     handleAddColumn () {
       this.data.columns.push({

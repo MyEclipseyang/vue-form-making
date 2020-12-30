@@ -202,16 +202,31 @@
     <template v-if="widget.type == 'text'">
       <span>{{dataModel}}</span>
     </template>
+
+    <template v-if="widget.type === 'custom'">
+      <el-input
+          v-model="dataModel"
+          :style="{width: widget.options.width}"
+      ></el-input>
+    </template>
+
+    <template v-if="widget.type === 'singleSelectExamScore'">
+      <GenerateSingleSelectExamScore :widget="widget"/>
+    </template>
   </el-form-item>
+
 </template>
 
 <script>
 import FmUpload from './Upload'
+import GenerateSingleSelectExamScore from './customcomponents/generateform/GenerateSingleSelectExamScore'
 
 export default {
+  name: 'GenerateFormItem',
   props: ['widget', 'models', 'rules', 'remote'],
   components: {
-    FmUpload
+    FmUpload,
+    GenerateSingleSelectExamScore
   },
   data () {
     return {
@@ -243,6 +258,7 @@ export default {
     dataModel: {
       deep: true,
       handler (val) {
+        console.log('GenerateFormItem.vue-dataModel-watch',val)
         this.models[this.widget.model] = val
         this.$emit('update:models', {
           ...this.models,

@@ -44,7 +44,7 @@
               
               <template v-if="layoutFields.length">
                 <div class="widget-cate">{{$t('fm.components.layout.title')}}</div>
-                <draggable tag="ul" :list="layoutComponents" 
+                <draggable tag="ul" :list="layoutComponents"
                   v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
                   @end="handleMoveEnd"
                   @start="handleMoveStart"
@@ -52,6 +52,24 @@
                 >
                   
                   <li v-if="layoutFields.indexOf(item.type) >=0" class="form-edit-widget-label no-put" v-for="(item, index) in layoutComponents" :key="index">
+                    <a>
+                      <i class="icon iconfont" :class="item.icon"></i>
+                      <span>{{item.name}}</span>
+                    </a>
+                  </li>
+                </draggable>
+              </template>
+
+              <template v-if="customFields.length">
+                <div class="widget-cate">{{$t('fm.components.custom.title')}}</div>
+                <draggable tag="ul" :list="customComponents"
+                           v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
+                           @end="handleMoveEnd"
+                           @start="handleMoveStart"
+                           :move="handleMove"
+                >
+
+                  <li v-if="customFields.indexOf(item.type)>=0" class="form-edit-widget-label" :class="{'no-put': item.type == 'divider'}" v-for="(item, index) in customComponents" :key="index">
                     <a>
                       <i class="icon iconfont" :class="item.icon"></i>
                       <span>{{item.name}}</span>
@@ -75,7 +93,11 @@
             </el-header>
             <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
               
-              <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
+              <widget-form v-if="!resetJson"
+                           ref="widgetForm"
+                           @onCalculatedWidgetData="onCalculatedWidgetData"
+                           :data="widgetForm"
+                           :select.sync="widgetFormSelect"></widget-form>
             </el-main>
           </el-container>
           
@@ -174,7 +196,7 @@ import WidgetForm from './WidgetForm'
 import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Clipboard from 'clipboard'
-import {basicComponents, layoutComponents, advanceComponents} from './componentsConfig.js'
+import {basicComponents, layoutComponents, advanceComponents, customComponents} from './componentsConfig.js'
 import {loadJs, loadCss} from '../util/index.js'
 import request from '../util/request.js'
 import generateCode from './generateCode.js'
@@ -221,6 +243,10 @@ export default {
     layoutFields: {
       type: Array,
       default: () => ['grid']
+    },
+    customFields: {
+      type: Array,
+      default: () => ['custom', 'singleSelectExamScore']
     }
   },
   data () {
@@ -228,13 +254,16 @@ export default {
       basicComponents,
       layoutComponents,
       advanceComponents,
+      customComponents,
       resetJson: false,
       widgetForm: {
         list: [],
         config: {
           labelWidth: 100,
           labelPosition: 'right',
-          size: 'small'
+          size: 'small',
+          isAssessmentForm: false,
+          formTotalScore: 0,
         },
       },
       configTab: 'widget',
@@ -281,6 +310,7 @@ export default {
   }
 }`,
       codeActiveName: 'vue',
+      allScoreData: [],
     }
   },
   mounted () {
@@ -301,6 +331,12 @@ export default {
         }
       })
       this.layoutComponents = this.layoutComponents.map(item => {
+        return {
+          ...item,
+          name: this.$t(`fm.components.fields.${item.type}`)
+        }
+      })
+      this.customComponents = this.customComponents.map(item => {
         return {
           ...item,
           name: this.$t(`fm.components.fields.${item.type}`)
@@ -327,7 +363,9 @@ export default {
       this.previewVisible = true
     },
     handleTest () {
+      let _this = this
       this.$refs.generateForm.getData().then(data => {
+        data = {...data, allScoreData: this.allScoreData}
         this.$alert(data, '').catch(e=>{})
         this.$refs.widgetPreview.end()
       }).catch(e => {
@@ -419,13 +457,26 @@ export default {
     },
     handleDataChange (field, value, data) {
       console.log(field, value, data)
+    },
+    onCalculatedWidgetData(ScoreList){
+      if(ScoreList.length > 0){
+        ScoreList.forEach((item, index)=>{
+          if(item.key){
+            this.allScoreData = this.allScoreData.filter(data => data.key !== item.key)
+            this.allScoreData.push({key:item.key, value: item.value})
+          }
+        })
+      }
+      console.log('Container-getAllWidgetData',this.allScoreData)
     }
   },
   watch: {
     widgetForm: {
       deep: true,
       handler: function (val) {
+        console.log('Container-widgetForm-watch',val)
         console.log(this.$refs.widgetForm)
+        this.$refs.widgetForm.generateScoreData()
       }
     },
     '$lang': function (val) {

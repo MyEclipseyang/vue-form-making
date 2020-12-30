@@ -23,7 +23,9 @@ export default {
         table: '子表单',
         grid: '栅格布局',
         tabs: '标签页',
-        divider: '分割线'
+        divider: '分割线',
+        custom: '自定义组件',
+        singleSelectExamScore: '单选题目'
       },
       basic: {
         title: '基础字段',
@@ -33,6 +35,9 @@ export default {
       },
       layout: {
         title: '布局字段',
+      },
+      custom:{
+        title: '自定义字段'
       }
     },
     description: {
@@ -73,7 +78,8 @@ export default {
         },
         labelWidth: '表单标签宽度',
         size: '组件尺寸',
-        customClass: '自定义Class'
+        customClass: '自定义Class',
+        useMobileView: '启用移动视图',
       },
       widget: {
         title: '字段属性',

@@ -23,7 +23,9 @@ export default {
         table: 'Sub-table',
         grid: 'Grid',
         tabs: 'Tabs',
-        divider: 'Divider'
+        divider: 'Divider',
+        custom: 'DIY',
+        singleSelectExamScore: 'singleSelectExamScore'
       },
       basic: {
         title: 'Basic Component',
@@ -33,6 +35,9 @@ export default {
       },
       layout: {
         title: 'Layout',
+      },
+      custom:{
+        title: 'Custom Component',
       }
     },
     description: {
@@ -73,7 +78,8 @@ export default {
         },
         labelWidth: 'Label Width',
         size: 'Size',
-        customClass: 'Custom Class'
+        customClass: 'Custom Class',
+        useMobileView: 'Use Mobile View',
       },
       widget: {
         title: 'Component Attribute',

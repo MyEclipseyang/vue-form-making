@@ -1,3 +1,5 @@
+import fa from "element-ui/src/locale/lang/fa";
+
 export const basicComponents = [
   {
     type: 'input',
@@ -304,6 +306,55 @@ export const layoutComponents = [
       gutter: 0,
       justify: 'start',
       align: 'top'
+    }
+  }
+]
+
+export const customComponents = [
+  {
+    type: 'custom',
+    icon: 'icon-zidingyishuju',
+    options: {
+      required: false,
+      disabled: false,
+      defaultValue: '',
+      width: '',
+      test: 'zyy-test'
+    }
+  },
+  {
+    // 单选题目
+    type: 'singleSelectExamScore',
+    icon: 'icon-zidingyishuju',
+    options: {
+      // 总分
+      totalScore: 0,
+      // 题目
+      content: '题目内容',
+      // 分值
+      scoreList: [
+        {
+          value: 0
+        },
+        {
+          value: 1
+        },
+      ],
+      // 违纪每人次扣分数
+      violateScoreReduction: 0,
+      // 违纪学生人数
+      violateStudentNum: 0,
+      // // 默认选中的分数
+      // defaultScore: 0,
+      // 是否允许分数为负数
+      isNegativeModel: false,
+      // 是否和学生关联
+      isRelateWithStudent: false,
+      // // 学生关联列表
+      // studentList: [],
+      width: '100%',
+      // 最终得分
+      finalScore: 0,
     }
   }
 ]

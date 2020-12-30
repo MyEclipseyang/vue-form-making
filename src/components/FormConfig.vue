@@ -13,6 +13,18 @@
         <el-input-number v-model="data.labelWidth" :min="0" :max="200" :step="10"></el-input-number>
       </el-form-item>
 
+      <el-form-item label="是否量化考核表单">
+        <el-switch
+            v-model="data.isAssessmentForm"
+            active-color="#13ce66"
+            inactive-color="#eee">
+        </el-switch>
+      </el-form-item>
+
+      <el-form-item v-if="data.isAssessmentForm" label="表单总分">
+        <el-input-number v-model="data.formTotalScore" :min="0" :max="200" :step="1"></el-input-number>
+      </el-form-item>
+
       <el-form-item :label="$t('fm.config.form.size')">
         <el-radio-group v-model="data.size">
           <el-radio-button label="medium">medium</el-radio-button>

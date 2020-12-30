@@ -54,7 +54,7 @@
                 </el-row>
             </template>
             <template v-else>
-              <widget-form-item v-if="element && element.key"  :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data"></widget-form-item>
+              <widget-form-item ref="widgetFormItem" v-if="element && element.key"  :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data"></widget-form-item>
             </template>
           </template>
         </transition-group>
@@ -88,6 +88,26 @@ export default {
     }
   },
   methods: {
+    generateScoreData(){
+      let scoreList = []
+      this.$nextTick(()=>{
+        let widgets = this.$refs.widgetFormItem;
+        console.log('WidgetForm-generateScoreData',widgets)
+        if(!widgets) return;
+
+        widgets.forEach((item, index)=>{
+          let scoreData = item.generateScoreData()
+          if(scoreData != null){
+            let oneScoreObj = {
+              key: scoreData.key,
+              value: scoreData.value
+            }
+            scoreList.push(oneScoreObj)
+          }
+        })
+        this.$emit("onCalculatedWidgetData", scoreList)
+      })
+    },
     handleMoveEnd ({newIndex, oldIndex}) {
       console.log('index', newIndex, oldIndex)
     },
