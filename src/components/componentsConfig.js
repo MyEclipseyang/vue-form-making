@@ -223,7 +223,11 @@ export const basicComponents = [
     icon: 'icon-wenzishezhi-',
     options: {
       defaultValue: 'This is a text',
-      customClass: '',
+      position: 'center',
+      defaultClass: {
+        display: 'block',
+        width: '90%',
+      },
     }
   }
 ]
@@ -352,6 +356,22 @@ export const customComponents = [
       isRelateWithStudent: false,
       // // 学生关联列表
       // studentList: [],
+      width: '100%',
+      // 最终得分
+      finalScore: 0,
+    }
+  },
+  {
+    // 扣分组件
+    type: 'subScore',
+    icon: 'icon-zidingyishuju',
+    options: {
+      // 该考核题目是否有总分
+      isHaveTotalScore: true,
+      // 总分
+      totalScore: 0,
+      // 题目
+      content: '题目内容',
       width: '100%',
       // 最终得分
       finalScore: 0,

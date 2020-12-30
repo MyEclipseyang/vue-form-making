@@ -25,7 +25,8 @@ export default {
         tabs: '标签页',
         divider: '分割线',
         custom: '自定义组件',
-        singleSelectExamScore: '单选题目'
+        singleSelectExamScore: '单选题目',
+        subScore: '得分组件'
       },
       basic: {
         title: '基础字段',

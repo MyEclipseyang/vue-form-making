@@ -246,7 +246,7 @@ export default {
     },
     customFields: {
       type: Array,
-      default: () => ['custom', 'singleSelectExamScore']
+      default: () => ['custom', 'singleSelectExamScore', 'subScore']
     }
   },
   data () {
@@ -476,6 +476,7 @@ export default {
       handler: function (val) {
         console.log('Container-widgetForm-watch',val)
         console.log(this.$refs.widgetForm)
+        this.allScoreData = []
         this.$refs.widgetForm.generateScoreData()
       }
     },

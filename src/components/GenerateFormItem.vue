@@ -199,8 +199,10 @@
       </el-cascader>
     </template>
 
-    <template v-if="widget.type == 'text'">
-      <span>{{dataModel}}</span>
+    <template v-if="widget.type === 'text'">
+      <span :style="{...widget.options.defaultClass, 'text-align': widget.options.position}">
+        {{dataModel}}
+      </span>
     </template>
 
     <template v-if="widget.type === 'custom'">
@@ -213,6 +215,10 @@
     <template v-if="widget.type === 'singleSelectExamScore'">
       <GenerateSingleSelectExamScore :widget="widget"/>
     </template>
+
+    <template v-if="widget.type === 'subScore'">
+      <GenerateSubScore :widget="widget"/>
+    </template>
   </el-form-item>
 
 </template>
@@ -220,13 +226,15 @@
 <script>
 import FmUpload from './Upload'
 import GenerateSingleSelectExamScore from './customcomponents/generateform/GenerateSingleSelectExamScore'
+import GenerateSubScore from './customcomponents/generateform/GenerateSubScore.vue'
 
 export default {
   name: 'GenerateFormItem',
   props: ['widget', 'models', 'rules', 'remote'],
   components: {
     FmUpload,
-    GenerateSingleSelectExamScore
+    GenerateSingleSelectExamScore,
+    GenerateSubScore
   },
   data () {
     return {

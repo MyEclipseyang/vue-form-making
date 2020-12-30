@@ -185,7 +185,9 @@
         </template>
 
         <template v-if="element.type === 'text'">
-          <span>{{element.options.defaultValue}}</span>
+          <span :style="{...element.options.defaultClass, 'text-align': element.options.position}">
+            {{element.options.defaultValue}}
+          </span>
         </template>
 
         <template v-if="element.type === 'custom'">
@@ -197,6 +199,10 @@
 
         <template v-if="element.type === 'singleSelectExamScore'">
           <WidgetSingleSelectExamScore ref="widgetSingleSelectExamScore" :element="element"/>
+        </template>
+
+        <template v-if="element.type === 'subScore'">
+          <WidgetSubScore ref="widgetSubScore" :element="element"/>
         </template>
 
         <div class="widget-view-action" v-if="selectWidget.key === element.key">
@@ -214,11 +220,13 @@
 <script>
 import FmUpload from './Upload'
 import WidgetSingleSelectExamScore from './customcomponents/widgetform/WidgetSingleSelectExamScore'
+import WidgetSubScore from './customcomponents/widgetform/WidgetSubScore'
 export default {
   props: ['element', 'select', 'index', 'data'],
   components: {
     FmUpload,
-    WidgetSingleSelectExamScore
+    WidgetSingleSelectExamScore,
+    WidgetSubScore,
   },
   data () {
     return {
@@ -246,6 +254,8 @@ export default {
     generateScoreData(){
       if(this.element.type === 'singleSelectExamScore'){
         return this.$refs.widgetSingleSelectExamScore.getScoreData()
+      }else if(this.element.type === 'subScore'){
+        return this.$refs.widgetSubScore.getScoreData()
       }
       return null;
     },
