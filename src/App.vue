@@ -8,27 +8,27 @@
 
       <div class="fm-link">
 
-        <a target="_blank" href="http://form.xiaoyaoji.cn/pricing">{{$t('header.pricing')}}</a>
-        <a target="_blank" href="https://gitee.com/gavinzhulei/vue-form-making/blob/master/README.zh-CN.md" v-if="$lang == 'zh-CN'">{{$t('header.document')}}</a>
-        <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making/blob/master/README.md" v-if="$lang == 'en-US'">{{$t('header.document')}}</a>
-        
-        <a target="_blank" href="https://gitee.com/gavinzhulei/vue-form-making" v-if="$lang == 'zh-CN'">Gitee</a> 
-        <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">GitHub</a>
+<!--        <a target="_blank" href="http://form.xiaoyaoji.cn/pricing">{{$t('header.pricing')}}</a>-->
+<!--        <a target="_blank" href="https://gitee.com/gavinzhulei/vue-form-making/blob/master/README.zh-CN.md" v-if="$lang === 'zh-CN'">{{$t('header.document')}}</a>-->
+<!--        <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making/blob/master/README.md" v-if="$lang === 'en-US'">{{$t('header.document')}}</a>-->
+<!--        -->
+<!--        <a target="_blank" href="https://gitee.com/gavinzhulei/vue-form-making" v-if="$lang === 'zh-CN'">Gitee</a>-->
+<!--        <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">GitHub</a>-->
 
-        <div class="action-item">
-          <el-dropdown trigger="click" @command="handleLangCommand">
-            <span class="el-dropdown-link">
-              {{$route.params.lang == 'zh-CN' ? '简体中文' : 'English'}}<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
-              <el-dropdown-item command="en-US">English</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+<!--        <div class="action-item">-->
+<!--          <el-dropdown trigger="click" @command="handleLangCommand">-->
+<!--            <span class="el-dropdown-link">-->
+<!--              {{$route.params.lang === 'zh-CN' ? '简体中文' : 'English'}}<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+<!--            </span>-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>-->
+<!--              <el-dropdown-item command="en-US">English</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
+<!--        </div>-->
 
-        <a class="ad" href="http://form.xiaoyaoji.cn" target="_blank">{{$t('header.advanced')}}</a>
-        <a class="ad" href="http://www.xiaoyaoji.cn" target="_blank" v-if="$lang == 'zh-CN'">小幺鸡接口工具</a>
+<!--        <a class="ad" href="http://form.xiaoyaoji.cn" target="_blank">{{$t('header.advanced')}}</a>-->
+<!--        <a class="ad" href="http://www.xiaoyaoji.cn" target="_blank" v-if="$lang === 'zh-CN'">小幺鸡接口工具</a>-->
       </div>
     </div>
     <div  class="fm-container"><router-view/></div>

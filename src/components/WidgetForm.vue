@@ -161,6 +161,17 @@ export default {
           }
         })
       }
+      // else if(this.data.list[newIndex].type === 'subScore'){
+      //   this.$set(this.data.list, newIndex, {
+      //     ...this.data.list[newIndex],
+      //     options: {
+      //       ...this.data.list[newIndex].options,
+      //       scoreCriterion: this.data.list[newIndex].options.scoreCriterion.map(item => ({
+      //         ...item
+      //       }))
+      //     }
+      //   })
+      // }
       if (this.data.list[newIndex].type === 'grid') {
         this.$set(this.data.list, newIndex, {
           ...this.data.list[newIndex],

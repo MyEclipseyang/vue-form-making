@@ -362,7 +362,7 @@ export const customComponents = [
     }
   },
   {
-    // 扣分组件
+    // 得分组件
     type: 'subScore',
     icon: 'icon-zidingyishuju',
     options: {
@@ -372,6 +372,23 @@ export const customComponents = [
       totalScore: 0,
       // 题目
       content: '题目内容',
+      // countIndex: 1,
+      // 得分标准
+      // scoreCriterion:[
+      //   {
+      //     index: 1,
+      //     content: '',
+      //     tip: '请输入标准内容',
+      //     scoreNum: 0,
+      //     isSubMode: false,
+      //     studentList:[
+      //       {
+      //         className:'',
+      //         studentName:''
+      //       }
+      //     ],
+      //   },
+      // ],
       width: '100%',
       // 最终得分
       finalScore: 0,

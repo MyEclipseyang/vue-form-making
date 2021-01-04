@@ -298,6 +298,15 @@ export default {
           }
         }
       }
+      // else if(this.data.list[index].type === 'subScore'){
+      //   cloneData = {
+      //     ...cloneData,
+      //     options: {
+      //       ...cloneData.options,
+      //       options: cloneData.options.scoreCriterion.map(item => ({...item}))
+      //     }
+      //   }
+      // }
 
       this.data.list.splice(index, 0, cloneData)
 
